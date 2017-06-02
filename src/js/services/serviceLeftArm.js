@@ -2,41 +2,29 @@ import { Service } from "threerest";
 import { Methods } from "threerest";
 import { Hal } from "threerest";
 
+import PythonHelper from "../helpers/pythonHelpers";
+
 @Service.path("/left_arm")
-export default class ServiceHelloWorld {
+export default class ServiceLeftArm {
 
   @Methods.get("/")
   @Hal.halServiceMethod()
   getAll(value, req) {
     let steps = req.query.steps;
-    if (!steps) {
-      return "vous devez préciser un pas à l'aide du query-param steps. Par exemple http://localhost:8080/left_arm?steps=50"
+    let direction = req.query.direction;
+    /*console.log("la valeur du steps est de ");
+    console.log(steps);
+    console.log("la valeur de la direction est ");
+    console.log(direction);*/
+    if (!steps || !direction) {
+      return "vous devez préciser un pas et une direction à l'aide des query-params suivants. Par exemple http://localhost:8080/left_arm?steps=50&direction=up\nLes valeurs possibles pour un bras est up, down, updown et pour une main ou une tête left, right, leftright"
+    }
+    
+    if (direction !== 'up' && direction !== 'down' && direction !== 'updown') {
+      return "les seules valeurs possible pour le query-param direction sont up, down et updown";
     }
 
-
-    let text = "";
-    let PythonShell = require('python-shell');
-
-    let options = {
-      pythonPath: '/usr/bin/python',
-      args: ['{ "steps": ' + steps + '}'],
-      mode: 'text'
-    };
-
-    let pyshell = new PythonShell('scripts/helloworld.py', options);
-
-    pyshell.on('message', function(message) {
-      console.log("Je suis de retour du python");
-      console.log(message);
-      text += message;
-    });
-
-    pyshell.end(function(err) {
-        if (err) throw err;
-        console.log('finished');
-        text += 'finished';
-        return text;
-    });
+    PythonHelper.launchPython(steps, direction, "leftArm");
 
     if (steps > 0) {
       return "Iron man lève son bras gauche de " + steps + " pas.";

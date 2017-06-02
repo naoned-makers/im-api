@@ -4,6 +4,7 @@ var threerest = require('threerest');
 
 import * as ServiceHelloWorld from "./services/serviceHelloWorld";
 import * as ServiceLeftArm from "./services/serviceLeftArm";
+import * as ServiceRightArm from "./services/serviceRightArm";
 
 import express from "express";
 
@@ -16,6 +17,7 @@ app.get("/", function(req, res){
 // load the service Test
 threerest.ServiceLoader.loadService(app, new ServiceHelloWorld.default());
 threerest.ServiceLoader.loadService(app, new ServiceLeftArm.default());
+threerest.ServiceLoader.loadService(app, new ServiceRightArm.default());
 
-app.listen(8080, () => {console.log("Express start...");});
+app.listen(8080, () => {console.log("Iron Man est opérationel...");});
 
