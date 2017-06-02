@@ -1,0 +1,26 @@
+{
+  "name": "imapi",
+  "version": "1.0.0",
+  "description": "API's robot control",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "jsr compile:js && node ./dist/js/app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naoned-makers/imapi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naoned-makers/imapi/issues"
+  },
+  "homepage": "https://github.com/naoned-makers/imapi#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "python-shell": "^0.4.0",
+    "q": "^1.5.0",
+    "threerest": "^1.0.5"
+  }
+}
